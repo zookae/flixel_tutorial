@@ -7,6 +7,9 @@ import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxDestroyUtil;
+import flixel.tile.FlxTilemap;
+import flixel.addons.editors.ogmo.FlxOgmoLoader;
+import flixel.FlxObject;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -14,13 +17,23 @@ import flixel.util.FlxDestroyUtil;
 class PlayState extends FlxState
 {
 	private var _player:Player;
+	private var _map:FlxOgmoLoader;
+	private var _mWalls:FlxTilemap;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
-		_player = new Player(20, 20);
+		_map = new FlxOgmoLoader("assets/data/room-001.oel");
+		_mWalls = _map.loadTilemap("assets/images/tiles.png", 16, 16, "walls");
+		_mWalls.setTileProperties(1, FlxObject.NONE); // tile 1 has no collision
+		_mWalls.setTileProperties(2, FlxObject.ANY); // tile 2 collides w/anything
+		add(_mWalls);
+
+
+		_player = new Player();
+		_map.loadEntities(placeEntities, "entities"); // call "placeEntities" fn on all maps in "entitities layer"
 		add(_player);
 		super.create();
 	}
@@ -41,5 +54,19 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-	}	
+
+		FlxG.collide(_player, _mWalls);
+	}
+
+	private function placeEntities(entityName:String, entityData:Xml):Void {
+		
+		// special logic to place player
+		if (entityName == "player") {
+			var x:Int = Std.parseInt(entityData.get("x"));
+			var y:Int = Std.parseInt(entityData.get("y"));
+
+			_player.x = x;
+			_player.y = y;
+		}
+	}
 }
