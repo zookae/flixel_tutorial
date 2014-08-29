@@ -69,6 +69,8 @@ class PlayState extends FlxState
 
 		FlxG.collide(_player, _mWalls);
 		FlxG.overlap(_player, _grpCoins, playerTouchCoin);
+		FlxG.collide(_grpEnemies, _mWalls);
+		_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
 	private function placeEntities(entityName:String, entityData:Xml):Void {
@@ -91,6 +93,16 @@ class PlayState extends FlxState
 	private function playerTouchCoin(P:Player, C:Coin):Void {
 		if (P.alive && P.exists && C.alive && C.exists) {
 			C.kill();
+		}
+	}
+
+	private function checkEnemyVision(e:Enemy):Void {
+		if (_mWalls.ray(e.getMidpoint(), _player.getMidpoint() )) {
+			e.seesPlayer = true;
+			e.playerPos.copyFrom(_player.getMidpoint());
+		}
+		else {
+			e.seesPlayer = false;
 		}
 	}
 }
