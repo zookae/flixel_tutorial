@@ -22,6 +22,7 @@ class PlayState extends FlxState
 	private var _map:FlxOgmoLoader;
 	private var _mWalls:FlxTilemap;
 	private var _grpCoins:FlxTypedGroup<Coin>;
+	private var _grpEnemies:FlxTypedGroup<Enemy>;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -36,6 +37,9 @@ class PlayState extends FlxState
 
 		_grpCoins = new FlxTypedGroup<Coin>();
 		add(_grpCoins);
+
+		_grpEnemies = new FlxTypedGroup<Enemy>();
+		add(_grpEnemies);
 
 		_player = new Player();
 		_map.loadEntities(placeEntities, "entities"); // call "placeEntities" fn on all maps in "entitities layer"
@@ -78,6 +82,9 @@ class PlayState extends FlxState
 		} 
 		else if (entityName == "coin") {
 			_grpCoins.add(new Coin(x+4, y+4));
+		}
+		else if (entityName == "enemy") {
+			_grpEnemies.add(new Enemy(x+ 4, y, Std.parseInt(entityData.get("etype"))));
 		}
 	}
 
