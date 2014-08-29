@@ -20,7 +20,7 @@ class Player extends FlxSprite {
 		animation.add("u", [6, 7, 6, 8], 6, false);
 		animation.add("d", [0, 1, 0, 2], 6, false);
 
-		drag.x = drag.y = 1200;
+		drag.x = drag.y = 1600;
 
 		// adjust player size to be 8 x 14; offset center to 4, 2
 		// helps fit through narrow corridors	
