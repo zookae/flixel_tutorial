@@ -30,7 +30,7 @@ class Enemy extends FlxSprite {
 		animation.add("d", [0, 1, 0, 2], 6, false);
 		animation.add("lr", [3, 4, 3, 5], 6, false);
 		animation.add("u", [6, 7, 6, 8], 6, false);
-		drag.x = drag.y = 10;
+		drag.x = drag.y = 50;
 		width = 8;
 		height = 14;
 		offset.x = 4;

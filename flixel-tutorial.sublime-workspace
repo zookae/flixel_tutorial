@@ -35,23 +35,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "source/Player.hx",
-			"settings":
-			{
-				"buffer_size": 1988,
-				"line_ending": "Windows",
-				"name": "package;"
-			}
-		},
-		{
-			"file": "source/PlayState.hx",
-			"settings":
-			{
-				"buffer_size": 931,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -59,6 +42,10 @@
 		"height": 392.0,
 		"selected_items":
 		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
 			[
 				"Package Control: ",
 				"Package Control: Enable Package"
@@ -72,7 +59,7 @@
 	},
 	"console":
 	{
-		"height": 125.0
+		"height": 162.0
 	},
 	"distraction_free":
 	{
@@ -85,9 +72,13 @@
 	},
 	"file_history":
 	[
+		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_futurePCG.txt",
+		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_classicalAI.txt",
+		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_icanjump.txt",
+		"/C/Users/zook/AppData/Roaming/Sublime Text 2/Packages/LaTeX Word Count/LaTeXWordCount.sublime-settings",
 		"/C/Users/zook/prog_proj/games/FlixelTut/source/PlayState.hx",
-		"/C/Users/zook/prog_proj/games/FlixelTut/source/MenuState.hx",
 		"/C/Users/zook/prog_proj/games/FlixelTut/source/Player.hx",
+		"/C/Users/zook/prog_proj/games/FlixelTut/source/MenuState.hx",
 		"/C/Users/zook/prog_proj/games/HelloWorld/source/MenuState.hx",
 		"/C/Users/zook/prog_proj/games/HelloWorld/source/Main.hx",
 		"/C/Users/zook/prog_proj/games/HelloWorld/source/PlayState.hx",
@@ -128,65 +119,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "source/Player.hx",
-					"settings":
-					{
-						"buffer_size": 1988,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1173,
-								1173
-							]
-						],
-						"settings":
-						{
-							"auto_name": "package;",
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 450.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "source/PlayState.hx",
-					"settings":
-					{
-						"buffer_size": 931,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								907,
-								907
-							]
-						],
-						"settings":
-						{
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

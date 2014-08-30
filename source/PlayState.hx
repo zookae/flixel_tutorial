@@ -12,6 +12,7 @@ import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.FlxObject;
 import flixel.FlxCamera;
 import flixel.group.FlxTypedGroup;
+using flixel.util.FlxSpriteUtil;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -23,6 +24,11 @@ class PlayState extends FlxState
 	private var _mWalls:FlxTilemap;
 	private var _grpCoins:FlxTypedGroup<Coin>;
 	private var _grpEnemies:FlxTypedGroup<Enemy>;
+
+	/* HUD */
+	private var _hud:HUD;
+	private var _money:Int = 0;
+	private var _health:Int = 3;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -45,7 +51,12 @@ class PlayState extends FlxState
 		_map.loadEntities(placeEntities, "entities"); // call "placeEntities" fn on all maps in "entitities layer"
 		add(_player);
 
+		/* camera */
 		FlxG.camera.follow(_player, FlxCamera.STYLE_TOPDOWN, 1);
+
+		/* HUD */
+		_hud = new HUD();
+		add(_hud);
 
 		super.create();
 	}
@@ -93,6 +104,10 @@ class PlayState extends FlxState
 	private function playerTouchCoin(P:Player, C:Coin):Void {
 		if (P.alive && P.exists && C.alive && C.exists) {
 			C.kill();
+
+			/* HUD */
+			_money++;
+			_hud.updateHUD(_health, _money);
 		}
 	}
 
