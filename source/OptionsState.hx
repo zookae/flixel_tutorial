@@ -35,10 +35,12 @@ class OptionsState extends FlxState {
 
 		_btnVolumeDown = new FlxButton(8, _txtVolume.y + _txtVolume.height + 2, "-", clickVolumeDown);
 		_btnVolumeDown.loadGraphic("assets/images/button.png", true, 20, 20);
+		_btnVolumeDown.onUp.sound = FlxG.sound.load("assets/sounds/select.wav");
 		add(_btnVolumeDown);
 
 		_btnVolumeUp = new FlxButton(FlxG.width - 28, _btnVolumeDown.y, "+", clickVolumeUp);
 		_btnVolumeUp.loadGraphic("assets/images/button.png", true, 20, 20);
+		_btnVolumeUp.onUp.sound = FlxG.sound.load("assets/sounds/select.wav");
 		add(_btnVolumeUp);
 
 		_barVolume = new FlxBar(_btnVolumeDown.x + _btnVolumeDown.width + 4, _btnVolumeDown.y, 
@@ -55,9 +57,11 @@ class OptionsState extends FlxState {
 		add(_txtVolumeAmt);
 
 		_btnClearData = new FlxButton((FlxG.width/2) - 90, FlxG.height - 28, "Clear Data", clickClearData);
+		_btnClearData.onUp.sound = FlxG.sound.load("assets/sounds/select.wav");
 		add(_btnClearData);
 
 		_btnBack = new FlxButton((FlxG.width/2) + 10, FlxG.height - 28, "Back", clickBack);
+		_btnBack.onUp.sound = FlxG.sound.load("assets/sounds/select.wav");
 		add(_btnBack);
 
 		_save = new FlxSave();

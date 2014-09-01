@@ -11,6 +11,7 @@ import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
 import flixel.util.FlxDestroyUtil;
+import flixel.system.FlxSound;
 using flixel.util.FlxSpriteUtil;
 
 class CombatHUD extends FlxTypedGroup<FlxSprite> {
@@ -41,6 +42,15 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 
 	private var _alpha:Float = 0; // fade in/out HUD
 	private var _wait:Bool = true; // use to block player action (b/t turns)
+
+	/* sound */
+	private var _sndFled:FlxSound;
+	private var _sndHurt:FlxSound;
+	private var _sndLose:FlxSound;
+	private var _sndMiss:FlxSound;
+	private var _sndSelect:FlxSound;
+	private var _sndWin:FlxSound;
+	private var _sndCombat:FlxSound;
 
 	public function new() {
 		super();
@@ -121,6 +131,15 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		/* mark object as not active or visible yet */
 		active = false;
 		visible = false;
+
+		/* load sounds */
+		_sndFled = FlxG.sound.load("assets/sounds/fled.wav");
+		_sndHurt = FlxG.sound.load("assets/sounds/hurt.wav");
+		_sndLose = FlxG.sound.load("assets/sounds/lose.wav");
+		_sndMiss = FlxG.sound.load("assets/sounds/miss.wav");
+		_sndSelect = FlxG.sound.load("assets/sounds/select.wav");
+		_sndWin = FlxG.sound.load("assets/sounds/win.wav");
+		_sndCombat = FlxG.sound.load("assets/sounds/combat.wav");
 	}
 
 	override public function update():Void {
@@ -143,9 +162,11 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 
 			// take action based on flags
 			if (_fire) {
+				_sndSelect.play();
 				makeChoice();
 			}
 			else if (_up) {
+				_sndSelect.play();
 				if (_selected == 0) {
 					_selected = 1;
 				}
@@ -155,6 +176,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 				movePointer();
 			}
 			else if (_down) {
+				_sndSelect.play();
 				if (_selected == 1) {
 					_selected = 0;
 				}
@@ -181,6 +203,13 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		_choices = FlxDestroyUtil.destroy(_choices);
 		_results = FlxDestroyUtil.destroy();
 		*/
+		_sndFled = FlxDestroyUtil.destroy(_sndFled);
+		_sndHurt = FlxDestroyUtil.destroy(_sndHurt);
+		_sndLose = FlxDestroyUtil.destroy(_sndLose);
+		_sndMiss = FlxDestroyUtil.destroy(_sndMiss);
+		_sndSelect = FlxDestroyUtil.destroy(_sndSelect);
+		_sndWin = FlxDestroyUtil.destroy(_sndWin);
+		_sndCombat = FlxDestroyUtil.destroy(_sndCombat);
 	}
 
 	/**
@@ -208,6 +237,8 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		_selected = 0;
 
 		visible = true;
+
+		_sndCombat.play();
 		// do numeric tween to fade in hud; when finished call finishFadeIn
 		FlxTween.num(0, 1, 0.66, 
 			{ ease:FlxEase.circOut, complete:finishFadeIn }, updateAlpha);
@@ -226,6 +257,8 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		active = true;
 		_wait = false;
 		_pointer.visible = true;
+
+		_sndSelect.play();
 	}
 
 	/* disable HUD after fade out */
@@ -254,11 +287,13 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 
 				// player attacks first, has 85% hit chance
 				if (FlxRandom.chanceRoll(85)) {
+					_sndHurt.play();
 					_damages[1].text = "1"; // hit deals 1 damage
 					_enemyHealth--;
 					_enemyHealthBar.currentValue = (_enemyHealth / _enemyMaxHealth) * 100;
 				}
 				else {
+					_sndMiss.play();
 					_damages[1].text = "MISS!";
 				}
 
@@ -281,6 +316,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 				// 50% chance to escape
 				if (FlxRandom.chanceRoll(50)) {
 					outcome = ESCAPE;
+					_sndFled.play();
 					_results.text = "ESCAPED!";
 					_results.visible = true;
 					_results.alpha = 0;
@@ -299,12 +335,14 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 	private function enemyAttack():Void {
 		// 30% chance for enemy to hit
 		if (FlxRandom.chanceRoll(30)) {
+			_sndHurt.play();
 			FlxG.camera.flash(FlxColor.WHITE, 0.2);
 			_damages[0].text = "1";
 			playerHealth--;
 			updatePlayerHealth();
 		}
 		else {
+			_sndMiss.play();
 			_damages[0].text = "MISS!";
 		}
 
@@ -345,6 +383,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 
 		if (playerHealth <= 0) {
 			outcome = DEFEAT;
+			_sndLose.play();
 			_results.text = "DEFEAT!";
 			_results.visible = true;
 			_results.alpha = 0;
@@ -352,6 +391,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		}
 		else if (_enemyHealth <= 0) {
 			outcome = VICTORY;
+			_sndWin.play();
 			_results.text = "VICTORY!";
 			_results.visible = true;
 			_results.alpha = 0;

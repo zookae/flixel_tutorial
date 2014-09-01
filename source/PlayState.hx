@@ -13,6 +13,7 @@ import flixel.addons.editors.ogmo.FlxOgmoLoader;
 import flixel.FlxObject;
 import flixel.FlxCamera;
 import flixel.group.FlxTypedGroup;
+import flixel.system.FlxSound;
 using flixel.util.FlxSpriteUtil;
 
 /**
@@ -38,6 +39,9 @@ class PlayState extends FlxState
 	/* Game end */
 	private var _ending:Bool;
 	private var _won:Bool;
+
+	/* sound */
+	private var _sndCoin:FlxSound;
 
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -70,6 +74,9 @@ class PlayState extends FlxState
 		_combatHud = new CombatHUD();
 		add(_combatHud);
 
+		/* sound */
+		_sndCoin = FlxG.sound.load("assets/sounds/coin.wav");
+
 		super.create();
 	}
 	
@@ -85,6 +92,7 @@ class PlayState extends FlxState
 		_grpEnemies = FlxDestroyUtil.destroy(_grpEnemies);
 		_hud = FlxDestroyUtil.destroy(_hud);
 		_combatHud = FlxDestroyUtil.destroy(_combatHud);
+		_sndCoin = FlxDestroyUtil.destroy(_sndCoin);
 	}
 
 	/**
@@ -151,6 +159,9 @@ class PlayState extends FlxState
 	private function playerTouchCoin(P:Player, C:Coin):Void {
 		if (P.alive && P.exists && C.alive && C.exists) {
 			C.kill();
+
+			/* sound */
+			_sndCoin.play(true);
 
 			/* HUD */
 			_money++;

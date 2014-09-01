@@ -25,13 +25,6 @@ class Main extends Sprite
 	public static function main():Void
 	{	
 		Lib.current.addChild(new Main());
-
-		var _save:FlxSave = new FlxSave();
-		_save.bind("flixel-tutorial");
-		if (_save.data.volume != null) {
-			FlxG.sound.volume = _save.data.volume;
-		}
-		_save.close();
 	}
 	
 	public function new() 
@@ -73,5 +66,15 @@ class Main extends Sprite
 		}
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+
+
+		var _save:FlxSave = new FlxSave();
+		_save.bind("flixel-tutorial");
+		if (_save.data.volume != null) {
+			FlxG.sound.volume = _save.data.volume;
+		}
+		_save.close();
+
+		FlxG.sound.playMusic("assets/music/HaxeFlixel_Tutorial_Game.mp3", 1, true);
 	}
 }

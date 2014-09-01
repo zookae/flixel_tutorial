@@ -5,9 +5,12 @@ import flixel.util.FlxColor;
 import flixel.util.FlxAngle;
 import flixel.FlxG;
 import flixel.FlxObject;
+import flixel.system.FlxSound;
+import flixel.util.FlxDestroyUtil;
 
 class Player extends FlxSprite {
 	public var speed:Float = 200;
+	private var _sndStep:FlxSound;
 
 	public function new(X:Float=0, Y:Float=0) {
 		super(X, Y);
@@ -19,6 +22,7 @@ class Player extends FlxSprite {
 		animation.add("lr", [3, 4, 3, 5], 6, false);
 		animation.add("u", [6, 7, 6, 8], 6, false);
 		animation.add("d", [0, 1, 0, 2], 6, false);
+		_sndStep = FlxG.sound.load("assets/sounds/step.wav");
 
 		drag.x = drag.y = 1600;
 
@@ -77,6 +81,7 @@ class Player extends FlxSprite {
 			FlxAngle.rotatePoint(speed, 0, 0, 0, mA, velocity);
 
 			if ((velocity.x != 0 || velocity.y != 0) && touching == FlxObject.NONE) {
+				_sndStep.play();
 				switch (facing) {
 					case FlxObject.LEFT, FlxObject.RIGHT:
 						animation.play("lr");
@@ -92,6 +97,11 @@ class Player extends FlxSprite {
 	override public function update():Void {
 		movement();
 		super.update();
+	}
+
+	override public function destroy():Void{
+		super.destroy();
+		_sndStep = FlxDestroyUtil.destroy(_sndStep);
 	}
 
 }
