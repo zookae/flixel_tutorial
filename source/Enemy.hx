@@ -7,6 +7,7 @@ import flixel.util.FlxRandom;
 import flixel.util.FlxAngle;
 import flixel.util.FlxVelocity;
 import flixel.FlxG;
+using flixel.util.FlxSpriteUtil;
 
 class Enemy extends FlxSprite {
 	public var speed:Float = 140;
@@ -40,6 +41,14 @@ class Enemy extends FlxSprite {
 		_brain = new FSM(idle);
 		_idleTmr = 0;
 		playerPos = FlxPoint.get();
+	}
+
+	override public function update():Void {
+		if (isFlickering()) {
+			return;
+		}
+		_brain.update();
+		super.update();
 	}
 
 	override public function draw():Void {
@@ -103,8 +112,11 @@ class Enemy extends FlxSprite {
 		}
 	}
 
-	override public function update():Void {
-		_brain.update();
-		super.update();
+
+	public function changeEnemy(EType:Int):Void {
+		if (etype != EType) {
+			etype = EType;
+			loadGraphic("assets/images/enemy-" + Std.string(etype) + ".png", true, 16, 16);
+		}
 	}
 }
