@@ -4,24 +4,108 @@
 		"selected_items":
 		[
 			[
-				"FlxTy",
-				"FlxTypedGroup	flixel.group"
+				"Flx",
+				"FlxButton"
 			],
 			[
-				"flxspr",
-				"FlxSpriteUtil	class"
+				"_grp",
+				"_grpEnemies	var"
 			],
 			[
-				"flxco",
-				"FlxColor	class"
+				"swi",
+				"switchState(...)	Void"
+			],
+			[
+				"_enem",
+				"_enemyHealthBar	var"
+			],
+			[
+				"_spr",
+				"_sprBack	var"
+			],
+			[
+				"upda",
+				"updateHUD"
+			],
+			[
+				"Com",
+				"CombatHUD	class"
+			],
+			[
+				"update",
+				"updateAlpha	function"
+			],
+			[
+				"finishFade",
+				"finishFadeOut	function"
+			],
+			[
+				"circ",
+				"circOut"
+			],
+			[
+				"updateDamage",
+				"updateDamageAlpha	function"
+			],
+			[
+				"al",
+				"alpha"
+			],
+			[
+				"cir",
+				"circInOut"
+			],
+			[
+				"chan",
+				"chanceRoll"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"cur",
+				"currentValue"
+			],
+			[
+				"_enemyHe",
+				"_enemyHealthBar	var"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"_enemy",
+				"_enemyHealthBar"
+			],
+			[
+				"_ene",
+				"_enemyHealth	var"
+			],
+			[
+				"Play",
+				"PlayerHealth	var"
+			],
+			[
+				"bor",
+				"BORDER_SHADOW"
+			],
+			[
+				"se",
+				"setBorderStyle"
+			],
+			[
+				"FLXco",
+				"FlxColor	flixel.util"
+			],
+			[
+				"FlxCo",
+				"FlxColor	flixel.util"
 			],
 			[
 				"_txt",
 				"_txtMoney	var"
-			],
-			[
-				"_spr",
-				"_sprMoney	var"
 			],
 			[
 				"w",
@@ -32,12 +116,8 @@
 				"_sprMoney	var"
 			],
 			[
-				"he",
-				"height	Float"
-			],
-			[
-				"bor",
-				"BORDER_SHADOW	Int"
+				"flxco",
+				"FlxColor	flixel.util"
 			],
 			[
 				"bo",
@@ -83,53 +163,20 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "source/HUD.hx",
-			"settings":
-			{
-				"buffer_size": 1834,
-				"line_ending": "Windows",
-				"name": "package ;"
-			}
-		},
-		{
-			"file": "source/CombatHUD.hx",
-			"settings":
-			{
-				"buffer_size": 1518,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "source/PlayState.hx",
-			"settings":
-			{
-				"buffer_size": 3107,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "source/Enemy.hx",
-			"settings":
-			{
-				"buffer_size": 2413,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 311.0,
 		"selected_items":
 		[
 			[
-				"inst",
-				"Package Control: Install Package"
+				"Package Control: ",
+				"Package Control: List Packages"
 			],
 			[
-				"Package Control: ",
-				"Package Control: Enable Package"
+				"inst",
+				"Package Control: Install Package"
 			],
 			[
 				"pacak",
@@ -153,15 +200,16 @@
 	},
 	"file_history":
 	[
-		"/C/Users/zook/Downloads/flixel-tutorial-Part-IX/flixel-tutorial-Part-IX/source/AssetPaths.hx",
-		"/C/Users/zook/prog_proj/games/FlixelTut/source/HUD.hx",
+		"/C/Users/zook/prog_proj/games/FlixelTut/source/Enemy.hx",
+		"/C/Users/zook/prog_proj/games/FlixelTut/source/GameOverState.hx",
+		"/C/Users/zook/prog_proj/games/FlixelTut/source/PlayState.hx",
+		"/C/Users/zook/prog_proj/games/FlixelTut/source/CombatHUD.hx",
 		"/C/Users/zook/prog_proj/games/FlixelTut/source/Player.hx",
 		"/C/Users/zook/prog_proj/games/FlixelTut/source/Coin.hx",
 		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_futurePCG.txt",
 		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_classicalAI.txt",
 		"/C/Users/zook/Dropbox/forms/2014/EXAG 2014/summary_icanjump.txt",
 		"/C/Users/zook/AppData/Roaming/Sublime Text 2/Packages/LaTeX Word Count/LaTeXWordCount.sublime-settings",
-		"/C/Users/zook/prog_proj/games/FlixelTut/source/PlayState.hx",
 		"/C/Users/zook/prog_proj/games/FlixelTut/source/MenuState.hx",
 		"/C/Users/zook/prog_proj/games/HelloWorld/source/MenuState.hx",
 		"/C/Users/zook/prog_proj/games/HelloWorld/source/Main.hx",
@@ -171,7 +219,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -185,6 +233,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"doneResultsIn",
+			"pointer",
 			"?\"))"
 		],
 		"highlight": true,
@@ -203,120 +253,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "source/HUD.hx",
-					"settings":
-					{
-						"buffer_size": 1834,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1461,
-								1461
-							]
-						],
-						"settings":
-						{
-							"auto_name": "package ;",
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 828.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "source/CombatHUD.hx",
-					"settings":
-					{
-						"buffer_size": 1518,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1513,
-								1513
-							]
-						],
-						"settings":
-						{
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 345.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "source/PlayState.hx",
-					"settings":
-					{
-						"buffer_size": 3107,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2835,
-								2835
-							]
-						],
-						"settings":
-						{
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 897.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "source/Enemy.hx",
-					"settings":
-					{
-						"buffer_size": 2413,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								910,
-								910
-							]
-						],
-						"settings":
-						{
-							"haxe-build-id": 0,
-							"syntax": "Packages/Haxe/Haxe.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 414.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -326,7 +264,7 @@
 	},
 	"input":
 	{
-		"height": 39.0
+		"height": 0.0
 	},
 	"layout":
 	{

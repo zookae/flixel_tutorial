@@ -10,6 +10,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxBar;
 import flixel.util.FlxColor;
 import flixel.util.FlxRandom;
+import flixel.util.FlxDestroyUtil;
 using flixel.util.FlxSpriteUtil;
 
 class CombatHUD extends FlxTypedGroup<FlxSprite> {
@@ -122,6 +123,66 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		visible = false;
 	}
 
+	override public function update():Void {
+		if (!_wait) {
+			// flags for keys pressed
+			var _up:Bool = false;
+			var _down:Bool = false;
+			var _fire:Bool = false;
+
+			// check button presses, set flags
+			if (FlxG.keys.anyJustReleased(["SPACE", "X"])) {
+				_fire = true;
+			}
+			else if (FlxG.keys.anyJustReleased(["W", "UP"])) {
+				_up = true;
+			}
+			else if (FlxG.keys.anyJustReleased(["S", "DOWN"])) {
+				_down = true;
+			}
+
+			// take action based on flags
+			if (_fire) {
+				makeChoice();
+			}
+			else if (_up) {
+				if (_selected == 0) {
+					_selected = 1;
+				}
+				else {
+					_selected--;
+				}
+				movePointer();
+			}
+			else if (_down) {
+				if (_selected == 1) {
+					_selected = 0;
+				}
+				else {
+					_selected++;
+				}
+				movePointer();
+			}
+		}
+		super.update();
+	}
+
+	override public function destroy():Void {
+		super.destroy();
+		e = FlxDestroyUtil.destroy(e);
+		_sprBack = FlxDestroyUtil.destroy(_sprBack);
+		_sprPlayer = FlxDestroyUtil.destroy(_sprPlayer);
+		_sprEnemy = FlxDestroyUtil.destroy(_sprEnemy);
+		_enemyHealthBar = FlxDestroyUtil.destroy(_enemyHealthBar);
+		_txtPlayerHealth = FlxDestroyUtil.destroy(_txtPlayerHealth);
+		_pointer = FlxDestroyUtil.destroy(_pointer);
+		/*
+		_damages = FlxDestroyUtil.destroy(_damages);
+		_choices = FlxDestroyUtil.destroy(_choices);
+		_results = FlxDestroyUtil.destroy();
+		*/
+	}
+
 	/**
 	*	Used to start combat: initializes screen and parameters
 	*	@param 	PlayerHealth 	The amount of health the player starts with
@@ -178,51 +239,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 		_txtPlayerHealth.text = Std.string(playerHealth) + " / 3";
 		_txtPlayerHealth.x = _sprPlayer.x + 4 - (_txtPlayerHealth.width / 2);
 	}
-
-	override public function update():Void {
-		if (!_wait) {
-			// flags for keys pressed
-			var _up:Bool = false;
-			var _down:Bool = false;
-			var _fire:Bool = false;
-
-			// check button presses, set flags
-			if (FlxG.keys.anyJustReleased(["SPACE", "X"])) {
-				_fire = true;
-			}
-			else if (FlxG.keys.anyJustReleased(["W", "UP"])) {
-				_up = true;
-			}
-			else if (FlxG.keys.anyJustReleased(["S", "DOWN"])) {
-				_down = true;
-			}
-
-			// take action based on flags
-			if (_fire) {
-				makeChoice();
-			}
-			else if (_up) {
-				if (_selected == 0) {
-					_selected = 1;
-				}
-				else {
-					_selected--;
-				}
-				movePointer();
-			}
-			else if (_down) {
-				if (_selected == 1) {
-					_selected = 0;
-				}
-				else {
-					_selected++;
-				}
-				movePointer();
-			}
-		}
-		super.update();
-	}
-
+	
 	/* adjust point to indicate current selection */
 	private function movePointer():Void {
 		_pointer.y = _choices[_selected].y + (_choices[_selected].height / 2) - 8;
@@ -312,9 +329,7 @@ class CombatHUD extends FlxTypedGroup<FlxSprite> {
 
 	/* triggered when results text finishes fading in; fade out entire HUD if not defeated */
 	private function doneResultsIn(_):Void {
-		if (outcome != DEFEAT) {
-			FlxTween.num(1, 0, 0.66, {ease:FlxEase.circOut, startDelay:1, complete:finishFadeOut}, updateAlpha);
-		}
+		FlxTween.num(1, 0, 0.66, {ease:FlxEase.circOut, startDelay:1, complete:finishFadeOut}, updateAlpha);
 	}
 
 

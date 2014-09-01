@@ -1,8 +1,9 @@
-package;
+package ;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.util.FlxColor;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
@@ -34,11 +35,14 @@ class PlayState extends FlxState
 	private var _inCombat:Bool = false;
 	private var _combatHud:CombatHUD;
 
+	/* Game end */
+	private var _ending:Bool;
+	private var _won:Bool;
+
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
-	override public function create():Void
-	{
+	override public function create():Void {
 		_map = new FlxOgmoLoader("assets/data/room-001.oel");
 		_mWalls = _map.loadTilemap("assets/images/tiles.png", 16, 16, "walls");
 		_mWalls.setTileProperties(1, FlxObject.NONE); // tile 1 has no collision
@@ -73,18 +77,24 @@ class PlayState extends FlxState
 	 * Function that is called when this state is destroyed - you might want to 
 	 * consider setting all objects this state uses to null to help garbage collection.
 	 */
-	override public function destroy():Void
-	{
+	override public function destroy():Void	{
 		super.destroy();
 		_player = FlxDestroyUtil.destroy(_player);
+		_mWalls = FlxDestroyUtil.destroy(_mWalls);
+		_grpCoins = FlxDestroyUtil.destroy(_grpCoins);
+		_grpEnemies = FlxDestroyUtil.destroy(_grpEnemies);
+		_hud = FlxDestroyUtil.destroy(_hud);
+		_combatHud = FlxDestroyUtil.destroy(_combatHud);
 	}
 
 	/**
 	 * Function that is called once every frame.
 	 */
-	override public function update():Void
-	{
+	override public function update():Void	{
 		super.update();
+		if (_ending) {
+			return; // pop out on ending
+		}
 
 		if (!_inCombat) {
 			FlxG.collide(_player, _mWalls);
@@ -97,18 +107,28 @@ class PlayState extends FlxState
 			if (!_combatHud.visible) {
 				_health = _combatHud.playerHealth;
 				_hud.updateHUD(_health, _money);
-				if (_combatHud.outcome == VICTORY) {
-					_combatHud.e.kill();
+				if (_combatHud.outcome == DEFEAT) {
+					_ending = true;
+					FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
 				}
 				else {
-					_combatHud.e.flicker();
+					if (_combatHud.outcome == VICTORY) {
+						_combatHud.e.kill();
+						if (_combatHud.e.etype == 1) {
+							_won = true;
+							_ending = true;
+							FlxG.camera.fade(FlxColor.BLACK, 0.33, false, doneFadeOut);
+						}
+					}
+					else {
+						_combatHud.e.flicker();
+					}
+					_inCombat = false;
+					_player.active = true;
+					_grpEnemies.active = true;
 				}
-				_inCombat = false;
-				_player.active = true;
-				_grpEnemies.active = true;
 			}
 		}
-		
 	}
 
 	private function placeEntities(entityName:String, entityData:Xml):Void {
@@ -161,5 +181,7 @@ class PlayState extends FlxState
 		}
 	}
 
-	
+	private function doneFadeOut():Void {
+		FlxG.switchState(new GameOverState(_won, _money));
+	}
 }
